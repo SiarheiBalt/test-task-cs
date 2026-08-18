@@ -1,5 +1,6 @@
 import {FC, type ReactNode} from 'react'
-import {useSidebarState} from "./SidebarRootContext"
+import {useSidebarState} from './SidebarRootContext'
+import {useSidebarGroup} from './SidebarGroupContext'
 
 
 type SidebarItemProps = {
@@ -18,23 +19,29 @@ const SidebarItem: FC<SidebarItemProps> = ({
                                                 icon
 }) => {
 
-    const { setOpenedGroup } = useSidebarState();
+    const { setOpenedGroup } = useSidebarState()
+    const { groupId } = useSidebarGroup()
+
+    const isGroupedItem = !!groupId
 
     const onHandleClick = () => {
         onSelect()
-        setOpenedGroup(null)
+        // If the element has no group, close active
+        !isGroupedItem && setOpenedGroup(null)
     }
 
     return (
-        <button
-            type="button"
-            className={className}
-            aria-current={isActive ? 'page' : undefined}
-            onClick={onHandleClick}
-        >
-            {icon && icon}
-            {children}
-        </button>
+        <li>
+            <button
+                type="button"
+                className={className}
+                aria-current={isActive ? 'page' : undefined}
+                onClick={onHandleClick}
+            >
+                {icon && icon}
+                {children}
+            </button>
+        </li>
     );
 };
 

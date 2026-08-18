@@ -1,12 +1,14 @@
 import {} from 'react'
 import { SidebarGroupProvider } from './SidebarGroupContext'
 
-const SidebarGroup = ({children, id}) => {
+const SidebarGroup = ({children, id, className}) => {
 
     return (
-        <SidebarGroupProvider groupId={id}>
-            {children}
-        </SidebarGroupProvider>
+        <li className={className}>
+            <SidebarGroupProvider groupId={id}>
+                {children}
+            </SidebarGroupProvider>
+        </li>
     );
 };
 

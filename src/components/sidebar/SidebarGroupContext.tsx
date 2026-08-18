@@ -10,7 +10,7 @@ type Props = {
 };
 
 const SidebarGroupContext =
-    createContext<SidebarGroupContextValue | null>(null);
+    createContext<SidebarGroupContextValue | {groupId: null}>({groupId: null})
 
 // useSidebarGroup must be used within SidebarGroup
 export const useSidebarGroup = () => {

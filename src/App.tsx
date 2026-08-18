@@ -8,9 +8,9 @@ function App() {
 
   return (
     <main>
-        <div className="min-h-screen p-6">
-            <AppRoutes />
+        <div className="flex min-h-screen">
             <RouterSidebar />
+            <AppRoutes />
         </div>
     </main>
   )

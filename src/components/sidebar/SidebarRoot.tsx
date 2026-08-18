@@ -2,14 +2,19 @@ import type { ReactNode, FC } from 'react'
 import { SidebarRootStateProvider } from './SidebarRootContext'
 
 type Props = {
-    children: ReactNode;
+    children: ReactNode
+    className: string | undefined
 };
 
-const SidebarRoot: FC<Props> = ({children}) => {
+const SidebarRoot: FC<Props> = ({children, className}) => {
     return (
-        <SidebarRootStateProvider>
-            {children}
-        </SidebarRootStateProvider>
+        <nav className={className}>
+            <ul>
+                <SidebarRootStateProvider>
+                    {children}
+                </SidebarRootStateProvider>
+            </ul>
+        </nav>
     );
 };
 
