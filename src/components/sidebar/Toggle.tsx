@@ -1,0 +1,28 @@
+import {type ReactNode, type FC} from "react"
+import {useSidebarState} from "./SidebarRootContext"
+
+type Props = {
+    children: ReactNode;
+    className?: string;
+};
+
+const Toggle: FC<Props> = ({
+                           children,
+                           className
+}) => {
+
+    const { collapsed, setCollapsed } = useSidebarState();
+
+    return (
+        <button
+            type="button"
+            className={className}
+            onClick={() => setCollapsed(!collapsed)}
+            aria-expanded={!collapsed}
+        >
+            {children(collapsed)}
+        </button>
+    );
+};
+
+export default Toggle;
