@@ -1,7 +1,6 @@
 import {Sidebar} from "./../components/sidebar"
 import {useLocation, useNavigate} from "react-router"
 import {
-    LayoutDashboard,
     Package,
     ShoppingCart,
     Truck,
@@ -9,65 +8,10 @@ import {
     PanelLeftClose,
     PanelLeftOpen,
     Smile
-} from 'lucide-react';
+} from 'lucide-react'
+import {routes} from "../routes";
+import {styles} from "../components/sidebar/styles"
 
-const routes = {
-    dashboard: '/dashboard',
-    products: '/products',
-    orders: '/orders',
-    suppliers: '/suppliers',
-    list: '/list',
-    review: '/review',
-    notifications: '/notifications'
-  } as const;
-
-const styles = {
-    sidebar: ({ collapsed }) => `
-         min-h-screen border-r border-gray-200 bg-white p-3
-         ${collapsed ? 'w-16' : 'w-64'}
-        `,
-    item: ({ isActive, collapsed }) => `
-        h-10 flex items-center rounded-md px-3 py-2 m-1 w-full gap-3
-        ${collapsed ? 'w-12 justify-center' : 'w-full gap-3'}
-        ${isActive ? 'bg-gray-200' : 'hover:bg-gray-100'}
-      `,
-    group: "group relative",
-    content: ({collapsed, isOpen}) => `
-          ${
-        collapsed
-            ? `
-                absolute left-full top-0 z-50 ml-2 w-48
-                rounded-md border border-gray-200 bg-white p-2 shadow-lg
-        
-                before:absolute
-                before:right-full
-                before:top-0
-                before:h-full
-                before:w-2
-                before:content-['']
-        
-                ${isOpen ? 'block' : 'hidden group-hover:block'}
-              `
-            : 'block'
-    }
-        `,
-    trigger: ({ isOpen, isActive, collapsed }) => `
-        flex items-center rounded-md px-3 py-2 w-full gap-3 m-1
-        ${collapsed ? 'w-12 justify-center' : 'w-full gap-3'}
-        ${isOpen || isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}
-      `,
-    groupedItem: ({ isActive, collapsed }) => `
-        h-10 flex w-full items-center rounded-md px-3 py-2 m-1
-        text-left text-sm
-        
-        ${collapsed ? "" : 
-            `before:mr-3 before:h-1.5 before:w-1.5 before:ml-4 before:shrink-0 before:rounded-full`}
-        
-        ${isActive ? 'bg-gray-200 before:bg-gray-900'
-          : 'hover:bg-gray-100 before:bg-gray-400'}
-        `,
-    toggle: "rounded-md px-3 py-2"
-}
 
 const RouterSidebar = () => {
     const location = useLocation()
@@ -79,9 +23,22 @@ const RouterSidebar = () => {
                 isActive={location.pathname === routes.dashboard}
                 onSelect={() => navigate(routes.dashboard)}
                 className={styles.item}
-                icon={<Smile size={20} className="shrink-0"/>}
+                icon={<Smile size={20} className={styles.itemIcon} />}
+                itemWrapperClassName={styles.itemWrapperClassName}
+                tooltipClassName={styles.tooltip}
             >
                 Dashboard
+            </Sidebar.Item>
+
+            <Sidebar.Item
+                isActive={location.pathname === routes.package}
+                onSelect={() => navigate(routes.package)}
+                className={styles.item}
+                icon={<Package size={20} className={styles.itemIcon} />}
+                itemWrapperClassName={styles.itemWrapperClassName}
+                tooltipClassName={styles.tooltip}
+            >
+                Package
             </Sidebar.Item>
 
             <Sidebar.Group
@@ -133,7 +90,7 @@ const RouterSidebar = () => {
             >
                 <Sidebar.Trigger
                     className={styles.trigger}
-                    icon={<ShoppingCart size={24} className="shrink-0"/>}
+                    icon={<ShoppingCart size={24} className={styles.itemIcon} />}
                     isActive={[
                         routes.list,
                         routes.review,
@@ -169,6 +126,18 @@ const RouterSidebar = () => {
                     </Sidebar.Item>
                 </Sidebar.Content>
             </Sidebar.Group>
+
+            <Sidebar.Item
+                isActive={location.pathname === routes.settings}
+                onSelect={() => navigate(routes.settings)}
+                className={styles.item}
+                icon={<Settings size={20} className={styles.itemIcon} />}
+                itemWrapperClassName={styles.itemWrapperClassName}
+                tooltipClassName={styles.tooltip}
+            >
+                Settings
+            </Sidebar.Item>
+
             <Sidebar.Toggle
                 className={styles.toggle}
             >

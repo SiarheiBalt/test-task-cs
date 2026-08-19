@@ -3,30 +3,38 @@ import {useSidebarGroup} from "./SidebarGroupContext"
 import {useSidebarState} from "./SidebarRootContext"
 
 type SidebarTriggerState = {
-    isOpen: boolean;
-    collapsed: boolean;
-    isActive: boolean;
+    isOpen: boolean
+    collapsed: boolean
+    isActive: boolean
+    isMobile?: boolean | undefined
 };
 
 type Props = {
     children: ReactNode
     className: string
     icon?: ReactNode
+    isActive: boolean
 }
 
 const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
     const { groupId } = useSidebarGroup()
-    const { openedGroup, setOpenedGroup, collapsed } = useSidebarState()
+    const { openedGroup, setOpenedGroup, collapsed, isMobile } = useSidebarState()
 
     const isOpen = openedGroup === groupId
 
     const handleClick = () => {
-        setOpenedGroup(groupId)
+        setOpenedGroup(isOpen ? null : groupId)
     };
 
     const onMouseOver = () => {
         if(collapsed) {
             if(!isOpen) setOpenedGroup(groupId)
+        }
+    }
+
+    const onMouseLeave = () => {
+        if(collapsed) {
+            if(isOpen) setOpenedGroup(null)
         }
     }
 
@@ -36,7 +44,7 @@ const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
 
     const resolvedClassName =
         typeof className === 'function'
-            ? className({ isOpen, collapsed, isActive })
+            ? className({ isOpen, collapsed, isActive, isMobile })
             : className;
 
     return (
@@ -45,6 +53,7 @@ const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
             className={resolvedClassName}
             onClick={handleClick}
             onMouseOver={onMouseOver}
+            onMouseLeave={onMouseLeave}
         >
             {icon && icon}
             {!collapsed && children}

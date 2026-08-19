@@ -11,7 +11,9 @@ const Toggle: FC<Props> = ({
                            className
 }) => {
 
-    const { collapsed, setCollapsed } = useSidebarState();
+    const { collapsed, setCollapsed, isMobile } = useSidebarState();
+
+    if(isMobile) return null
 
     return (
         <button

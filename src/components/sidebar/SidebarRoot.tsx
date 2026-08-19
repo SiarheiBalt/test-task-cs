@@ -17,11 +17,11 @@ const SidebarRoot = ({ children, className }: Props) => {
 };
 
 const SidebarRootView: FC<Props> = ({children, className}) => {
-    const { collapsed } = useSidebarState()
+    const { collapsed, isMobile } = useSidebarState()
 
     const resolvedClassName =
         typeof className === 'function'
-            ? className({ collapsed })
+            ? className({ collapsed, isMobile})
             : className;
 
     return (

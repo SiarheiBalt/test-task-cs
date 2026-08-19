@@ -3,16 +3,19 @@ import {useSidebarState} from './SidebarRootContext'
 import {useSidebarGroup} from './SidebarGroupContext'
 
 type SidebarItemState = {
-    isActive: boolean;
-    collapsed: boolean;
+    isActive: boolean
+    collapsed: boolean
+    isMobile: boolean
 };
 
 type SidebarItemProps = {
     children: ReactNode
     isActive?: boolean
     onSelect?: () => void
-    className?: string | ((state: SidebarItemState) => string);
-    icon?: ReactNode;
+    className?: string | ((state: SidebarItemState) => string)
+    tooltipClassName?: string
+    itemWrapperClassName?: string
+    icon?: ReactNode
 };
 
 const SidebarItem: FC<SidebarItemProps> = ({
@@ -20,10 +23,12 @@ const SidebarItem: FC<SidebarItemProps> = ({
                                                 onSelect,
                                                 isActive = false,
                                                 className,
-                                                icon
+                                                icon,
+                                                tooltipClassName,
+                                                itemWrapperClassName
 }) => {
 
-    const { setOpenedGroup, collapsed } = useSidebarState()
+    const { setOpenedGroup, collapsed, isMobile } = useSidebarState()
     const { groupId } = useSidebarGroup()
 
     const isGroupedItem = !!groupId
@@ -36,11 +41,11 @@ const SidebarItem: FC<SidebarItemProps> = ({
 
     const resolvedClassName =
         typeof className === 'function'
-            ? className({ isActive, collapsed })
+            ? className({ isActive, collapsed, isMobile })
             : className;
 
     return (
-        <li>
+        <li className={itemWrapperClassName}>
             <button
                 type="button"
                 className={resolvedClassName}
@@ -49,6 +54,11 @@ const SidebarItem: FC<SidebarItemProps> = ({
                 {icon && icon}
                 {(!collapsed || isGroupedItem) && children}
             </button>
+            {collapsed && tooltipClassName && (
+                <span className={tooltipClassName}>
+                    {children}
+                </span>
+            )}
         </li>
     );
 };

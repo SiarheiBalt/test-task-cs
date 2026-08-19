@@ -1,10 +1,11 @@
-import {type ReactNode} from 'react'
+import {type ReactNode, type FC} from 'react'
 import { useSidebarGroup } from './SidebarGroupContext'
 import {useSidebarState} from "./SidebarRootContext"
 
 type SidebarContentState = {
-    collapsed: boolean;
-    isOpen: boolean;
+    collapsed: boolean
+    isOpen: boolean
+    isMobile?: boolean | undefined
 };
 
 type Props = {
@@ -12,17 +13,19 @@ type Props = {
     className?: string | ((state: SidebarContentState) => string);
 };
 
-const SidebarContent = ({children, className}) => {
-    const { openedGroup, collapsed, isOpen } = useSidebarState()
+const SidebarContent: FC<Props> = ({children, className}) => {
+    const { openedGroup, collapsed, isMobile } = useSidebarState()
     const { groupId } = useSidebarGroup()
 
     if (!collapsed && openedGroup !== groupId) {
         return null;
     }
 
+    const isOpen = openedGroup === groupId
+
     const resolvedClassName =
         typeof className === 'function'
-            ? className({ collapsed, isOpen })
+            ? className({ collapsed, isOpen, isMobile })
             : className;
 
     return (
