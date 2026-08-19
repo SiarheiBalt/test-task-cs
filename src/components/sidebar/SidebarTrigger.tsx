@@ -2,16 +2,21 @@ import {type ReactNode, type FC, useEffect} from 'react'
 import {useSidebarGroup} from "./SidebarGroupContext"
 import {useSidebarState} from "./SidebarRootContext"
 
+type SidebarTriggerState = {
+    isOpen: boolean;
+    collapsed: boolean;
+    isActive: boolean;
+};
+
 type Props = {
     children: ReactNode
     className: string
     icon?: ReactNode
-    isActive?: boolean | undefined
 }
 
 const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
     const { groupId } = useSidebarGroup()
-    const { openedGroup, setOpenedGroup } = useSidebarState()
+    const { openedGroup, setOpenedGroup, collapsed } = useSidebarState()
 
     const isOpen = openedGroup === groupId
 
@@ -23,16 +28,19 @@ const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
         if(isActive) setOpenedGroup(groupId)
     }, [])
 
+    const resolvedClassName =
+        typeof className === 'function'
+            ? className({ isOpen, collapsed, isActive })
+            : className;
+
     return (
         <button
             type="button"
-            className={className}
+            className={resolvedClassName}
             onClick={handleClick}
-            aria-expanded={isOpen}
-            data-active={isActive}
         >
             {icon && icon}
-            {children}
+            {!collapsed && children}
         </button>
     );
 };

@@ -1,18 +1,33 @@
 import type { ReactNode, FC } from 'react'
-import { SidebarRootStateProvider } from './SidebarRootContext'
+import { SidebarRootStateProvider, useSidebarState } from './SidebarRootContext'
 
 type Props = {
     children: ReactNode
-    className: string | undefined
+    className?: string | ((state: { collapsed: boolean }) => string)
+}
+
+const SidebarRoot = ({ children, className }: Props) => {
+    return (
+        <SidebarRootStateProvider>
+            <SidebarRootView className={className}>
+                {children}
+            </SidebarRootView>
+        </SidebarRootStateProvider>
+    );
 };
 
-const SidebarRoot: FC<Props> = ({children, className}) => {
+const SidebarRootView: FC<Props> = ({children, className}) => {
+    const { collapsed } = useSidebarState()
+
+    const resolvedClassName =
+        typeof className === 'function'
+            ? className({ collapsed })
+            : className;
+
     return (
-        <nav className={className}>
+        <nav className={resolvedClassName}>
             <ul>
-                <SidebarRootStateProvider>
-                    {children}
-                </SidebarRootStateProvider>
+                {children}
             </ul>
         </nav>
     );

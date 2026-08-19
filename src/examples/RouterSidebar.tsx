@@ -22,22 +22,31 @@ const routes = {
   } as const;
 
 const styles = {
-    sidebar: "w-64 min-h-screen border-r border-gray-200 bg-white p-3",
-    item: `flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm 
-           hover:bg-gray-100
-           aria-[current=page]:bg-gray-200`,
+    sidebar: ({ collapsed }) => `
+         min-h-screen border-r border-gray-200 bg-white p-3
+         ${collapsed ? 'w-16' : 'w-64'}
+        `,
+    item: ({ isActive, collapsed }) => `
+        h-10 flex items-center rounded-md px-3 py-2 m-1 w-full gap-3
+        ${collapsed ? 'w-12 justify-center' : 'w-full gap-3'}
+        ${isActive ? 'bg-gray-200' : 'hover:bg-gray-100'}
+      `,
     group: "",
-    trigger: `flex w-full items-center gap-3 rounded-md px-3 py-2 text-left text-sm hover:bg-gray-100
-              data-[active=true]:bg-gray-100
-              aria-[expanded=true]:bg-gray-50`,
-    groupedItem: `flex w-full items-center rounded-md px-3 py-2
-                  text-left text-sm hover:bg-gray-100
-
-                  before:mr-3 before:h-1.5 before:w-1.5 before:ml-4
-                  before:shrink-0 before:rounded-full before:bg-gray-400
-
-                  aria-[current=page]:bg-gray-200
-                  aria-[current=page]:before:bg-gray-900`,
+    trigger: ({ isOpen, isActive, collapsed }) => `
+        flex items-center rounded-md px-3 py-2 w-full gap-3 m-1
+        ${collapsed ? 'w-12 justify-center' : 'w-full gap-3'}
+        ${isOpen || isActive ? 'bg-gray-100' : 'hover:bg-gray-100'}
+      `,
+    groupedItem: ({ isActive, collapsed }) => `
+        h-10 flex w-full items-center rounded-md px-3 py-2 m-1
+        text-left text-sm
+        
+        before:mr-3 before:h-1.5 before:w-1.5 before:ml-4
+        before:shrink-0 before:rounded-full
+        
+        ${isActive ? 'bg-gray-200 before:bg-gray-900'
+          : 'hover:bg-gray-100 before:bg-gray-400'}
+        `,
     toggle: "rounded-md px-3 py-2"
 }
 
@@ -51,7 +60,7 @@ const RouterSidebar = () => {
                 isActive={location.pathname === routes.dashboard}
                 onSelect={() => navigate(routes.dashboard)}
                 className={styles.item}
-                icon={<Smile size={20}/>}
+                icon={<Smile size={20} className="shrink-0"/>}
             >
                 Dashboard
             </Sidebar.Item>
@@ -62,7 +71,7 @@ const RouterSidebar = () => {
             >
                 <Sidebar.Trigger
                     className={styles.trigger}
-                    icon={<Truck size={24}/>}
+                    icon={<Truck size={24} className="shrink-0"/>}
                     isActive={[
                         routes.products,
                         routes.orders,
@@ -100,15 +109,10 @@ const RouterSidebar = () => {
             <Sidebar.Group
                 id="clients"
                 className={styles.group}
-                isActive={[
-                    routes.list,
-                    routes.review,
-                    routes.notifications,
-                ].includes(location.pathname)}
             >
                 <Sidebar.Trigger
                     className={styles.trigger}
-                    icon={<ShoppingCart size={24}/>}
+                    icon={<ShoppingCart size={24} className="shrink-0"/>}
                     isActive={[
                         routes.list,
                         routes.review,
