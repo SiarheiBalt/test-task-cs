@@ -1,16 +1,11 @@
 import {type ReactNode, type FC} from 'react'
 import { useSidebarGroup } from './SidebarGroupContext'
 import {useSidebarState} from "./SidebarRootContext"
-
-type SidebarContentState = {
-    collapsed: boolean
-    isOpen: boolean
-    isMobile?: boolean | undefined
-};
+import type {SidebarClassNameProps} from "./types"
 
 type Props = {
     children: ReactNode;
-    className?: string | ((state: SidebarContentState) => string);
+    className?: string | ((state: SidebarClassNameProps) => string);
 };
 
 const SidebarContent: FC<Props> = ({children, className}) => {

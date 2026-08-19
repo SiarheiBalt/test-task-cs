@@ -1,17 +1,11 @@
 import {type ReactNode, type FC, useEffect} from 'react'
 import {useSidebarGroup} from "./SidebarGroupContext"
 import {useSidebarState} from "./SidebarRootContext"
-
-type SidebarTriggerState = {
-    isOpen: boolean
-    collapsed: boolean
-    isActive: boolean
-    isMobile?: boolean | undefined
-};
+import {type SidebarClassNameProps} from "./types";
 
 type Props = {
     children: ReactNode
-    className: string
+    className: string | ((state: SidebarClassNameProps) => string)
     icon?: ReactNode
     isActive: boolean
 }

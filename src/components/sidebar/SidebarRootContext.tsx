@@ -4,10 +4,26 @@ type Props = {
     children: ReactNode
 }
 
-export const SidebarRootContext = createContext({});
+type State = {
+    openedGroup: string | null
+    collapsed: boolean
+    isMobile: boolean
+    setOpenedGroup: (groupId: string | null) => void
+    setCollapsed: (collapsed: boolean) => void
+}
+
+export const SidebarRootContext = createContext<State | null>(null)
 
 export const useSidebarState = () => {
-    return useContext(SidebarRootContext);
+    const context = useContext(SidebarRootContext)
+
+    if (!context) {
+        throw new Error(
+            'useSidebarState must be used within SidebarRootStateProvider'
+        )
+    }
+
+    return context
 }
 
 export const SidebarRootStateProvider: FC<Props> = ({children}) => {

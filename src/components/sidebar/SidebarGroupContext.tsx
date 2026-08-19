@@ -17,7 +17,7 @@ export const useSidebarGroup = () => {
     return  useContext(SidebarGroupContext);
 };
 
-export const SidebarGroupProvider: FC<Props> = ({groupId, children, isActive}) => {
+export const SidebarGroupProvider: FC<Props> = ({groupId, children}) => {
     return (
         <SidebarGroupContext.Provider value={{ groupId }}>
             {children}

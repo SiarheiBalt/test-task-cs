@@ -1,8 +1,8 @@
 import {} from 'react'
 import AppRoutes from "./routes/index"
+import RouterSidebar from "./examples/RouterSidebar";
 
 import './App.css'
-import RouterSidebar from "./examples/RouterSidebar";
 
 function App() {
 

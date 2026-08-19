@@ -1,9 +1,10 @@
 import type { ReactNode, FC } from 'react'
 import { SidebarRootStateProvider, useSidebarState } from './SidebarRootContext'
+import type {SidebarClassNameProps} from './types'
 
 type Props = {
     children: ReactNode
-    className?: string | ((state: { collapsed: boolean }) => string)
+    className?: string | ((state: SidebarClassNameProps) => string)
 }
 
 const SidebarRoot = ({ children, className }: Props) => {
@@ -33,4 +34,4 @@ const SidebarRootView: FC<Props> = ({children, className}) => {
     );
 };
 
-export default SidebarRoot;
+export default SidebarRoot

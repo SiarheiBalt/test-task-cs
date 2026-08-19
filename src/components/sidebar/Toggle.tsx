@@ -2,7 +2,7 @@ import {type ReactNode, type FC} from "react"
 import {useSidebarState} from "./SidebarRootContext"
 
 type Props = {
-    children: ReactNode;
+    children: (collapsed: boolean ) => ReactNode
     className?: string;
 };
 
@@ -22,7 +22,7 @@ const Toggle: FC<Props> = ({
             onClick={() => setCollapsed(!collapsed)}
             aria-expanded={!collapsed}
         >
-            {children(collapsed)}
+            {children(!!collapsed)}
         </button>
     );
 };

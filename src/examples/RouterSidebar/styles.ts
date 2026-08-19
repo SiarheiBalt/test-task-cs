@@ -1,5 +1,7 @@
+import type { SidebarClassNameProps } from '../../components/sidebar/types'
+
 export const styles = {
-    sidebar: ({collapsed, isMobile}) => `
+    sidebar: ({collapsed, isMobile}: SidebarClassNameProps) => `
         bg-white border-gray-200 transition-all duration-300
         ${
         isMobile
@@ -18,7 +20,7 @@ export const styles = {
             `
     }
       `,
-    item: ({isActive, collapsed, isMobile}) => `
+    item: ({isActive, collapsed, isMobile}: SidebarClassNameProps) => `
         flex h-10 items-center rounded-md transition-colors duration-150
         [&>svg]:shrink-0
         ${
@@ -33,7 +35,7 @@ export const styles = {
 
     itemIcon: "shrink-0",
 
-    trigger: ({isOpen, isActive, collapsed, isMobile}) => `
+    trigger: ({isOpen, isActive, collapsed, isMobile}: SidebarClassNameProps) => `
         flex h-10 items-center rounded-md mt-1 transition-colors duration-150
         [&>svg]:shrink-0
         ${
@@ -44,7 +46,7 @@ export const styles = {
     
         ${isOpen || isActive ? 'bg-gray-200' : 'hover:bg-gray-100'}
       `,
-    content: ({collapsed, isOpen, isMobile}) => `
+    content: ({collapsed, isOpen, isMobile}: SidebarClassNameProps) => `
       transition-all duration-200 ease-in-out
       ${
         isMobile
@@ -80,7 +82,7 @@ export const styles = {
     }
     `,
 
-    groupedItem: ({isActive, collapsed, isMobile}) => `
+    groupedItem: ({isActive, collapsed, isMobile}: SidebarClassNameProps) => `
         flex h-10 w-full items-center rounded-md px-3
         text-left text-sm m-1 transition-all duration-150
         

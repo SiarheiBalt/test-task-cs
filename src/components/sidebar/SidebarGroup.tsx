@@ -1,7 +1,13 @@
-import {} from 'react'
+import {type FC, type ReactNode} from 'react'
 import { SidebarGroupProvider } from './SidebarGroupContext'
 
-const SidebarGroup = ({children, id, className}) => {
+type Props = {
+    children: ReactNode
+    id: string
+    className: string
+}
+
+const SidebarGroup: FC<Props> = ({children, id, className}) => {
 
     return (
         <li className={className}>

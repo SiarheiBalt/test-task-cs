@@ -1,18 +1,13 @@
-import {FC, type ReactNode} from 'react'
+import {type FC, type ReactNode} from 'react'
 import {useSidebarState} from './SidebarRootContext'
 import {useSidebarGroup} from './SidebarGroupContext'
-
-type SidebarItemState = {
-    isActive: boolean
-    collapsed: boolean
-    isMobile: boolean
-};
+import type {SidebarClassNameProps} from "./types"
 
 type SidebarItemProps = {
     children: ReactNode
     isActive?: boolean
-    onSelect?: () => void
-    className?: string | ((state: SidebarItemState) => string)
+    onSelect: () => void
+    className?: string | ((state: SidebarClassNameProps) => string)
     tooltipClassName?: string
     itemWrapperClassName?: string
     icon?: ReactNode

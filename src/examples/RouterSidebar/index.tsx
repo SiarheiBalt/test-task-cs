@@ -1,4 +1,4 @@
-import {Sidebar} from "./../components/sidebar"
+import {Sidebar} from "../../components/sidebar"
 import {useLocation, useNavigate} from "react-router"
 import {
     Package,
@@ -9,11 +9,12 @@ import {
     PanelLeftOpen,
     Smile
 } from 'lucide-react'
-import {routes} from "../routes";
-import {styles} from "../components/sidebar/styles"
+import {routes} from "../../routes";
+import {styles} from "./styles"
 
 
 const RouterSidebar = () => {
+    // You can use useState instead, or a state manager
     const location = useLocation()
     const navigate = useNavigate()
 
@@ -47,12 +48,12 @@ const RouterSidebar = () => {
             >
                 <Sidebar.Trigger
                     className={styles.trigger}
-                    icon={<Truck size={24} className="shrink-0"/>}
-                    isActive={[
+                    icon={<Truck size={24} className={styles.itemIcon} />}
+                    isActive={([
                         routes.products,
                         routes.orders,
                         routes.suppliers,
-                    ].includes(location.pathname)}
+                    ] as string[]).includes(location.pathname)}
                 >
                     Inventory
                 </Sidebar.Trigger>
@@ -91,11 +92,11 @@ const RouterSidebar = () => {
                 <Sidebar.Trigger
                     className={styles.trigger}
                     icon={<ShoppingCart size={24} className={styles.itemIcon} />}
-                    isActive={[
+                    isActive={([
                         routes.list,
                         routes.review,
                         routes.notifications,
-                    ].includes(location.pathname)}
+                    ] as string[]).includes(location.pathname)}
                 >
                     Clients
                 </Sidebar.Trigger>
@@ -141,7 +142,7 @@ const RouterSidebar = () => {
             <Sidebar.Toggle
                 className={styles.toggle}
             >
-                {(collapsed =>
+                {((collapsed) =>
                     collapsed ? <PanelLeftOpen /> : <PanelLeftClose />)}
             </Sidebar.Toggle>
         </Sidebar>
