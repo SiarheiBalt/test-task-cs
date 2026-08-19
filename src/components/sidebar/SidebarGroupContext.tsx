@@ -1,12 +1,12 @@
 import {createContext, useContext, type ReactNode, type FC} from 'react'
 
 type SidebarGroupContextValue = {
-    groupId: string;
+    groupId: string
 };
 
 type Props = {
-    groupId: string;
-    children: ReactNode;
+    groupId: string
+    children: ReactNode
 };
 
 const SidebarGroupContext =
@@ -17,7 +17,7 @@ export const useSidebarGroup = () => {
     return  useContext(SidebarGroupContext);
 };
 
-export const SidebarGroupProvider: FC<Props> = ({groupId, children}) => {
+export const SidebarGroupProvider: FC<Props> = ({groupId, children, isActive}) => {
     return (
         <SidebarGroupContext.Provider value={{ groupId }}>
             {children}

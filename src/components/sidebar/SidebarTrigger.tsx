@@ -24,6 +24,12 @@ const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
         setOpenedGroup(groupId)
     };
 
+    const onMouseOver = () => {
+        if(collapsed) {
+            if(!isOpen) setOpenedGroup(groupId)
+        }
+    }
+
     useEffect(() => {
         if(isActive) setOpenedGroup(groupId)
     }, [])
@@ -38,6 +44,7 @@ const SidebarTrigger: FC<Props> = ({children, className, icon, isActive}) => {
             type="button"
             className={resolvedClassName}
             onClick={handleClick}
+            onMouseOver={onMouseOver}
         >
             {icon && icon}
             {!collapsed && children}

@@ -47,7 +47,7 @@ const SidebarItem: FC<SidebarItemProps> = ({
                 onClick={onHandleClick}
             >
                 {icon && icon}
-                {!collapsed && children}
+                {(!collapsed || isGroupedItem) && children}
             </button>
         </li>
     );

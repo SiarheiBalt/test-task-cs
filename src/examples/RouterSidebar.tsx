@@ -31,7 +31,26 @@ const styles = {
         ${collapsed ? 'w-12 justify-center' : 'w-full gap-3'}
         ${isActive ? 'bg-gray-200' : 'hover:bg-gray-100'}
       `,
-    group: "",
+    group: "group relative",
+    content: ({collapsed, isOpen}) => `
+          ${
+        collapsed
+            ? `
+                absolute left-full top-0 z-50 ml-2 w-48
+                rounded-md border border-gray-200 bg-white p-2 shadow-lg
+        
+                before:absolute
+                before:right-full
+                before:top-0
+                before:h-full
+                before:w-2
+                before:content-['']
+        
+                ${isOpen ? 'block' : 'hidden group-hover:block'}
+              `
+            : 'block'
+    }
+        `,
     trigger: ({ isOpen, isActive, collapsed }) => `
         flex items-center rounded-md px-3 py-2 w-full gap-3 m-1
         ${collapsed ? 'w-12 justify-center' : 'w-full gap-3'}
@@ -41,8 +60,8 @@ const styles = {
         h-10 flex w-full items-center rounded-md px-3 py-2 m-1
         text-left text-sm
         
-        before:mr-3 before:h-1.5 before:w-1.5 before:ml-4
-        before:shrink-0 before:rounded-full
+        ${collapsed ? "" : 
+            `before:mr-3 before:h-1.5 before:w-1.5 before:ml-4 before:shrink-0 before:rounded-full`}
         
         ${isActive ? 'bg-gray-200 before:bg-gray-900'
           : 'hover:bg-gray-100 before:bg-gray-400'}
@@ -81,7 +100,9 @@ const RouterSidebar = () => {
                     Inventory
                 </Sidebar.Trigger>
 
-                <Sidebar.Content>
+                <Sidebar.Content
+                    className={styles.content}
+                >
                     <Sidebar.Item
                         isActive={location.pathname === routes.products}
                         onSelect={() => navigate(routes.products)}
@@ -122,7 +143,9 @@ const RouterSidebar = () => {
                     Clients
                 </Sidebar.Trigger>
 
-                <Sidebar.Content>
+                <Sidebar.Content
+                    className={styles.content}
+                >
                     <Sidebar.Item
                         isActive={location.pathname === routes.list}
                         onSelect={() => navigate(routes.list)}
