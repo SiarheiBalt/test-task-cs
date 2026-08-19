@@ -21,7 +21,7 @@ export const styles = {
     }
       `,
     item: ({isActive, collapsed, isMobile}: SidebarClassNameProps) => `
-        flex h-10 items-center rounded-md transition-colors duration-150
+        flex h-10 items-center rounded-md transition-colors duration-150 mb-1 mt-1
         [&>svg]:shrink-0
         ${
         isMobile || collapsed
